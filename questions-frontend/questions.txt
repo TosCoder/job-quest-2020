@@ -1,0 +1,52 @@
+1.Explain the what's similar & difference between cookie / localStorage / sessionStorage.
+
+    cookie / localStorage / sessionStorage สิ่งที่เหมือนกันของทั้ง 3 ตัวคือ ทั้ง 3 ตัวจะเก็บค่าเป็น key value ในเรื่องของการทำงาน ตัว localStorage และ sessionStorage จะทำงานเหมือนกัน 
+    ต่างกันแค่ localStorage นั้นจะเก็บข้อมูลบน browser และจะไม่ถูกลบ จนกว่าจะมีการ clear cache ส่วน sessionStorage นั้นจะถูก clear หลังจากที่ปิด browser ทั้ง 2 ตัวนี้จะใช้ได้แค่ทาง client
+    ต่อมา cookie จะต่างจาก localStorage และ sessionStorage ตรงที่สามารถตั้งเวลา expired ให้ลบตัวมันเองได้ และสามารถนำไปใช้กับฝั่ง server ได้
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+2.Today React have hooks. Do we still need a class component? If your answer is yes then which 
+case that we still need to use class component.
+    
+    ปัจจุบัน React ได้เพิ่ม hook ขึ้นมาเพื่อแก้หลายๆอย่าง (version 16.7) ทำให้ coding ได้ง่าย เพราะเราไม่ต้อง setState แค่ใน class componnent
+    หรือ ทำ lifecycles แต่เราสามารถใช้ useState() ในการ set state และ useEffect() ในการทำ lifecycles บางตัว (componentDidMount, componentDidUpdate)
+    แต่เพราะ useEffect ยังทำหน้าเป็น componentDidMount, componentDidUpdate บาง lifecycles จึงยังมีความจำเป็นที่ใช้ class component เพื่อใช้ตัวนั้นๆ 
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+3.Breifly describe how Virtual DOM works.
+
+    Virtual DOM หรือ DOM นั้น เหมือนเป็นตัวแทนของ Real DOM แทนที่เราจะสร้าง div จริงๆ ไว้ใน browser เราสามารถสร้างมันไปเก็บไว้ใ memory แทน
+    เมื่อ component มีการ re-render หรือ มีการเปลี่ยนแปลง อะไรบางอย่าง ตัว Virtual DOM จะทำการเปรียบเทียบกับตัวที่เก็บไว้ใน memory และเช็คว่าส่วนไหนมีการเปลี่ยนแปลง
+    ระบบก็จะทำการเปลี่ยนแปลงแค่เฉพาะส่วนนั้นๆ เท่านั้น จึงทำให้มัน render เร็วขึ้น 
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+4.Consider this React's components tree
+Apps > ComponentA > ComponentB > ComponentC > ComponentD > ComponentE
+If we have a state at Apps component, and ComponentE component want to access that state value. 
+How do you implements this?
+
+    วิธีที่ดีที่สุด คงจะเป็น การใช้ redux ช่วย เพราะ เราสามารถ set state ไปไว้ใน store กลาง แล้วให้ component E เรียกมัยมาใช้ได้ 
+    แต่ถ้าเรา เลือกวิธีการส่ง props จาก Apps (แม่) ไปยัง component E อาจทำให้ coding ดูยากเพราะ มันหลายต่อกว่าจะถึง E (A->E) 
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+5.What different between using relative / absolute / fixed to position the element.
+
+    relative:  จะแสดงผลต่อจาก ณ จุดที่มันอยู่ตรงนั้น “แบบตรงไปตรงมา” ซึ่ง position: relative; สามารถปรับ top, left, right, bottom ได้ 
+    absolute: จะแสดงผลเป็น “อิสระ” คือจะให้มันไปอยู่ตรงไหนก็ได้ ซึ่งมันจะอยู่แค่ภายใต้ element ที่ครอบมันอีกทีเท่านั้น
+    fixed:  จะแสดงผล “แบบอยู่กับที่” โดยมันจะถูกตรึงไว้ แต่เราสามารถปรับ  top, left, right, bottom ได้ 
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+6.Explain the different between using callback / Promise / async await. When to use and when not to.
+
+    callback: คือการส่ง function ไปอีก function นึง เนื่องจาก javascript นั้นเป็น asynchronous ทำให้การทำงานของ function 2 ตัวนั้นไม่รอกัน 
+              จึงต้องใช้วิธีการ callback คือการส่ง function ที่จะทำงานต่อไป เข้าไปใน function ที่กำลังทำงานอยู่เพื่อให้สามารถเรียกใช้ได้เมื่อทำงานใน function 
+              ตัวเองเสร็จ
+
+    Promise: นั้นคือการสร้าง function ที่จะคืนค่าให้ตัวแปรต่อเมื่อมีการใช้ function Promise Promise นั้นจะต้องทำเป็น asynchronous เพื่อจบการทำงานของ Promise 
+
+    async await: ใช้งานได้แต่กับ function ที่เป็น promise จะสามารถ ประกาศ async ที่ function และ await ที่ function ที่มีการดึงข้อมูล เพื่อรอให้ function ทำงานเสร็จได้เลย 
